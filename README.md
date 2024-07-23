@@ -126,5 +126,68 @@ docker run -d \
 
 - If you encounter issues, check Docker logs and error messages for troubleshooting.
 
+#ALL DOCKER COMMANDS TO RUN APPLICATION TO SERVER
+1 sudo apt-get upadate 
+2 sudo apt-get upgrade
+3 sudo apt-get install docker.io
+4 sudo usermode -aG docker $USER
+5 docker bulid -t two-tier-app:latest
+6 docker volume create mysql-data
+ 
+
+(SQL CONATINER to add volume sql)
+7. docker run -d --name mysql-demo -v mysql-data:/var/lib/MySQL -e MYSQL_ROOT_PASSWORD=root MySQL:5.7
+   docker exec -it container id bash
+      MySQL -u root -p
+        enter pass = root
+          create database devops;
+             show databases;
+-------------------------------------------------------------------------------------------
+and docker rm mysql-demo && docker rm mysql-demo 
+ 
+8 . docker run -d --name mysql-demo -v mysql-data:/var/lib/MySQL -e MYSQL_ROOT_PASSWORD=root MySQL:5.7 
+        docker exec -it container id bash
+          MySQL -u root -p
+            enter pass = root
+             show databases;
+                   devops
+-------------------------------------------------------------------------------------------
+(bulid Docker file flaskapp)
+8 . docker build -t two-tier-app:latest . 
+9 .  docker run -d -e MYSQL_HOST=mysql-demo -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e    MYSQL_DB=devops two-tie-app:latest
+
+10 docker network create twotier
+-------------------------------------------------------------------------------------------
+(attached the docker network)
+-------------------------------------------------------------------------------------------
+       FINAL COMMAND TO DEPLOY THE APPLICATIONS TO EC2 instance
+-------------------------------------------------------------------------------------------
+11 docker run -d -v MySQL-data:/var/lib/mysql  --network twotier --name mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATBASE=devops 
+
+12  docker run -d -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tie-app:latest
+
+-------------------------------------------------------------------------------------------
+  check the data base 
+   13 docker exec -it mysql bash
+         MySQL -u root -p
+            enter pass = root
+               use devops;
+                 select * from messages;
+
+
+( docker compose )
+  docker-compose.yml (This is docker file format)
+   sudo apt-get install docker-compose-v2 
+    docker compose up -d
+     docker compose dowm
+
+
+
+
+                    
+
+                
+   
+
 ```
 
